@@ -11,22 +11,29 @@
 </head>
 <body>
 
+    <div class="custom-cursor-dot" id="cursorDot"></div>
+    <div class="custom-cursor-ring" id="cursorRing"></div>
+
     <header class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">GLOW</a>
+            <a href="#" class="logo magnetic-target">GLOW</a>
             <nav class="nav-links">
-                <a href="#services">Services</a>
-                <a href="#team">Our Employees</a>
-                <a href="#booking">Book Now</a>
+                <a href="#services" class="magnetic-target">Services</a>
+                <a href="#team" class="magnetic-target">Our Employees</a>
+                <a href="#booking" class="magnetic-target">Book Now</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
-        <div class="hero-content reveal">
-            <h1>Experience the art of beauty and precision.</h1>
-            <p class="sub-hero">A curated sanctuary engineered for luxury nail artistry, epilation, and advanced skin therapy.</p>
-            <a href="#services" class="cta-button">Explore Services</a>
+        <div class="hero-content">
+            <div class="mask-container">
+                <h1 class="mask-reveal">Experience the art of beauty and precision.</h1>
+            </div>
+            <p class="sub-hero reveal">A curated sanctuary engineered for luxury nail artistry, epilation, and advanced skin therapy.</p>
+            <div class="reveal">
+                <a href="#services" class="cta-button magnetic-target">Explore Services</a>
+            </div>
         </div>
     </section>
 
@@ -34,7 +41,7 @@
         <h2 class="section-title reveal">Our Services</h2>
         <div class="services-grid">
             
-            <div class="service-card reveal">
+            <div class="service-card reveal-stagger">
                 <div class="video-container">
                     <video src="placeholder-nail-10s.mp4" loop muted playsinline></video>
                     <div class="video-overlay"><span>Preview</span></div>
@@ -45,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="service-card reveal">
+            <div class="service-card reveal-stagger">
                 <div class="video-container">
                     <video src="placeholder-laser-10s.mp4" loop muted playsinline></video>
                     <div class="video-overlay"><span>Preview</span></div>
@@ -56,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="service-card reveal">
+            <div class="service-card reveal-stagger">
                 <div class="video-container">
                     <video src="placeholder-spa-10s.mp4" loop muted playsinline></video>
                     <div class="video-overlay"><span>Preview</span></div>
@@ -74,31 +81,31 @@
         <h2 class="section-title reveal">Our Employees</h2>
         <div class="team-grid">
             
-            <div class="team-card reveal">
+            <div class="team-card reveal-stagger">
                 <div class="avatar-placeholder">M</div>
                 <h3>Mimo</h3>
                 <p class="role">Senior Specialist</p>
             </div>
 
-            <div class="team-card reveal">
+            <div class="team-card reveal-stagger">
                 <div class="avatar-placeholder">D</div>
                 <h3>Dalia</h3>
                 <p class="role">Nail Artistry Expert</p>
             </div>
 
-            <div class="team-card reveal">
+            <div class="team-card reveal-stagger">
                 <div class="avatar-placeholder">E</div>
                 <h3>Eloiza</h3>
                 <p class="role">Therapeutic Practitioner</p>
             </div>
 
-            <div class="team-card reveal">
+            <div class="team-card reveal-stagger">
                 <div class="avatar-placeholder">E</div>
                 <h3>Erin</h3>
                 <p class="role">Dermal Clinician</p>
             </div>
 
-            <div class="team-card reveal">
+            <div class="team-card reveal-stagger">
                 <div class="avatar-placeholder">A</div>
                 <h3>Aika</h3>
                 <p class="role">Epilation Specialist</p>
@@ -111,7 +118,7 @@
         <div class="booking-container reveal">
             <h2>Concierge Booking</h2>
             <p class="booking-prompt">Want to book appointments or have complaints? Feel free to reach out!</p>
-            <a href="https://wa.me/9613204510" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
+            <a href="https://wa.me/9613204510" target="_blank" rel="noopener noreferrer" class="whatsapp-btn magnetic-target">
                 Book An Appointment
             </a>
         </div>
