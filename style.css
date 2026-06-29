@@ -8,7 +8,8 @@
     --pure-white: #FFFFFF;
     --text-dark: #2C2527;
     --text-muted: #6E5F62;
-    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fluid: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 * {
@@ -33,10 +34,56 @@ h1, h2, h3 {
 body {
     background: linear-gradient(180deg, var(--pure-white) 0%, var(--soft-white) 50%, var(--primary-pink) 100%);
     background-attachment: fixed;
+    overflow-x: hidden;
 }
 
 /* ==========================================================================
-   2. Navigation Layer
+   2. Custom Luxury Micro-Inertia Cursor Layers
+   ========================================================================== */
+.custom-cursor-dot, .custom-cursor-ring {
+    width: 6px;
+    height: 6px;
+    background-color: var(--text-dark);
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+}
+
+.custom-cursor-ring {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid var(--deep-pink);
+    transition: transform 0.08s linear, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+}
+
+/* Cursor State Polymorphism on Active Interaction Focus */
+body.cursor-active .custom-cursor-dot {
+    background-color: var(--deep-pink);
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+body.cursor-active .custom-cursor-ring {
+    width: 44px;
+    height: 44px;
+    border-color: var(--text-dark);
+    background: rgba(255, 211, 224, 0.2);
+}
+
+/* Hide native tracking layers on mobile viewports */
+@media (max-width: 1024px) {
+    .custom-cursor-dot, .custom-cursor-ring {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   3. Navigation Layer (With Hover Expansion Engine)
    ========================================================================== */
 .navbar {
     position: fixed;
@@ -44,10 +91,11 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 211, 224, 0.3);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 211, 224, 0.2);
+    transition: var(--transition-fluid);
 }
 
 .nav-container {
@@ -65,6 +113,7 @@ body {
     letter-spacing: 0.2em;
     color: var(--text-dark);
     text-decoration: none;
+    transition: var(--transition-fluid);
 }
 
 .nav-links {
@@ -78,15 +127,36 @@ body {
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: var(--transition-smooth);
+    position: relative;
+    padding: 0.25rem 0;
+    transition: var(--text-dark) 0.3s ease;
+}
+
+/* Underline Animation */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--deep-pink);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-links a:hover {
-    color: var(--deep-pink);
+    color: var(--text-dark);
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 /* ==========================================================================
-   3. Hero Section Framework
+   4. Hero Section Framework (With Mask Structural Reveals)
    ========================================================================== */
 .hero {
     min-height: 100vh;
@@ -95,18 +165,28 @@ body {
     justify-content: center;
     text-align: center;
     padding: 0 2rem;
-    background: linear-gradient(135deg, var(--pure-white) 30%, var(--primary-pink) 100%);
+    background: linear-gradient(135deg, var(--pure-white) 30%, var(--soft-white) 70%, var(--primary-pink) 100%);
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 900px;
 }
 
-.hero h1 {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    line-height: 1.25;
+.mask-container {
+    overflow: hidden;
     margin-bottom: 1.5rem;
+}
+
+.hero h1.mask-reveal {
+    font-size: clamp(2rem, 8vw, 3.8rem);
+    line-height: 1.2;
     color: var(--text-dark);
+    transform: translateY(100%);
+    animation: maskRevealIngress 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes maskRevealIngress {
+    to { transform: translateY(0); }
 }
 
 .sub-hero {
@@ -118,36 +198,55 @@ body {
 
 .cta-button {
     display: inline-block;
-    padding: 1rem 2.5rem;
+    padding: 1.1rem 2.8rem;
     text-decoration: none;
     color: var(--pure-white);
     background-color: var(--text-dark);
-    border-radius: 0;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     font-size: 0.8rem;
     transition: var(--transition-smooth);
     border: 1px solid var(--text-dark);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--deep-pink);
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
 }
 
 .cta-button:hover {
-    background-color: transparent;
     color: var(--text-dark);
+    border-color: var(--deep-pink);
+}
+
+.cta-button:hover::before {
+    transform: translateY(0);
 }
 
 /* ==========================================================================
-   4. Structural Layouts (Services & Team Grid)
+   5. Custom Premium Elements Layouts (Staggers & Micro-Scaling)
    ========================================================================== */
 .services-section, .team-section, .booking-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 8rem 2rem;
+    padding: 10rem 2rem;
 }
 
 .section-title {
     font-size: clamp(1.8rem, 6vw, 2.5rem);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
     position: relative;
     letter-spacing: 0.05em;
 }
@@ -158,35 +257,41 @@ body {
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
+    width: 35px;
     height: 1px;
     background-color: var(--deep-pink);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-title.active::after {
+    width: 75px;
 }
 
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
+    gap: 3rem;
 }
 
 .service-card {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 211, 224, 0.4);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 211, 224, 0.3);
     overflow: hidden;
     transition: var(--transition-smooth);
 }
 
 .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(250, 175, 184, 0.15);
+    transform: translateY(-12px) scale(1.01);
+    box-shadow: 0 30px 60px rgba(250, 175, 184, 0.2);
     background: var(--pure-white);
+    border-color: rgba(250, 175, 184, 0.6);
 }
 
 .video-container {
     width: 100%;
-    height: 240px;
+    height: 260px;
     position: relative;
-    background-color: #EFEFEF;
+    background-color: var(--soft-white);
     overflow: hidden;
 }
 
@@ -194,7 +299,12 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-smooth);
+    transform: scale(1);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover .video-container video {
+    transform: scale(1.08);
 }
 
 .video-overlay {
@@ -203,12 +313,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(44, 37, 39, 0.2);
+    background: rgba(44, 37, 39, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transition: var(--transition-smooth);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
 }
 
@@ -218,7 +328,8 @@ body {
     font-size: 0.8rem;
     letter-spacing: 0.2em;
     border: 1px solid var(--pure-white);
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
+    transition: var(--transition-fluid);
 }
 
 .service-card:hover .video-overlay,
@@ -227,57 +338,84 @@ body {
 }
 
 .service-info {
-    padding: 2rem;
+    padding: 2.5rem;
 }
 
 .service-info h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.85rem;
 }
 
 .service-info p {
     font-size: 0.9rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
-/* Team Component Matrix */
+/* Team Section Dynamic Grid Map */
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .team-card {
     text-align: center;
-    padding: 3rem 1.5rem;
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 211, 224, 0.2);
+    padding: 4rem 1.5rem;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 211, 224, 0.15);
     transition: var(--transition-smooth);
 }
 
 .team-card:hover {
     background: var(--pure-white);
     border-color: var(--deep-pink);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(250, 175, 184, 0.1);
 }
 
 .avatar-placeholder {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-pink), var(--pure-white));
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: var(--text-dark);
-    border: 1px solid rgba(250, 175, 184, 0.5);
+    border: 1px solid rgba(250, 175, 184, 0.4);
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.avatar-placeholder::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px dashed var(--deep-pink);
+    opacity: 0;
+    transform: scale(0.9) rotate(0deg);
+    transition: var(--transition-smooth);
+}
+
+.team-card:hover .avatar-placeholder {
+    transform: scale(1.05);
+}
+
+.team-card:hover .avatar-placeholder::after {
+    opacity: 1;
+    transform: scale(1) rotate(90deg);
 }
 
 .team-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 0.4rem;
 }
 
@@ -285,42 +423,49 @@ body {
     font-size: 0.8rem;
     text-transform: uppercase;
     color: var(--text-muted);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
 }
 
 /* ==========================================================================
-   5. Communication & Booking Interface Layer
+   6. Communication & Booking Interface Layer
    ========================================================================== */
 .booking-section {
     text-align: center;
 }
 
 .booking-container {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(250, 175, 184, 0.4);
-    padding: 4rem 2rem;
-    max-width: 800px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(250, 175, 184, 0.3);
+    padding: 6rem 3rem;
+    max-width: 850px;
     margin: 0 auto;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+}
+
+.booking-container:hover {
+    border-color: var(--deep-pink);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 40px 80px rgba(250, 175, 184, 0.15);
 }
 
 .booking-container h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
+    font-size: 2.4rem;
+    margin-bottom: 1.2rem;
     color: var(--text-dark);
 }
 
 .booking-prompt {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--text-muted);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     line-height: 1.6;
 }
 
 .whatsapp-btn {
     display: inline-block;
-    padding: 1.1rem 2.8rem;
+    padding: 1.2rem 3rem;
     text-decoration: none;
     color: var(--pure-white);
     background-color: var(--text-dark);
@@ -330,19 +475,41 @@ body {
     font-weight: 500;
     transition: var(--transition-smooth);
     border: 1px solid var(--text-dark);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.whatsapp-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(250, 175, 184, 0.3);
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
 }
 
 .whatsapp-btn:hover {
-    background-color: transparent;
     color: var(--text-dark);
-    box-shadow: 0 10px 20px rgba(44, 37, 39, 0.1);
+    border-color: var(--text-dark);
+    transform: scale(1.02);
 }
 
-/* Animation Engine Primitives */
+.whatsapp-btn:hover::before {
+    transform: translateX(0);
+}
+
+/* ==========================================================================
+   7. Animation Engine Activation Infrastructure
+   ========================================================================== */
 .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(40px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.active {
@@ -350,9 +517,21 @@ body {
     transform: translateY(0);
 }
 
+/* Stagger Execution States managed via JS injection matrices */
+.reveal-stagger {
+    opacity: 0;
+    transform: translateY(50px) scale(0.98);
+    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 .footer {
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     font-size: 0.8rem;
     color: var(--text-muted);
     letter-spacing: 0.05em;
@@ -360,23 +539,19 @@ body {
 }
 
 /* ==========================================================================
-   6. Responsive Media Query Adaptation
+   8. Responsive Media Query Adaptation
    ========================================================================== */
 @media (max-width: 768px) {
     .services-section, .team-section, .booking-section {
-        padding: 4rem 1.25rem;
+        padding: 5rem 1.25rem;
     }
 
     .booking-container {
-        padding: 3rem 1.5rem;
-    }
-
-    .hero {
-        padding: 0 1.25rem;
+        padding: 4rem 1.5rem;
     }
 
     .nav-container {
-        padding: 1rem 1.25rem;
+        padding: 1.25rem 1.25rem;
         flex-direction: column;
         gap: 0.75rem;
     }
@@ -398,16 +573,16 @@ body {
 
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 1.75rem;
+        gap: 2rem;
     }
 
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 1.25rem;
     }
 
     .team-card {
-        padding: 2rem 1rem;
+        padding: 2.5rem 1rem;
     }
 }
 
@@ -418,6 +593,6 @@ body {
     
     .nav-links a {
         margin: 0 0.5rem;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
     }
 }
