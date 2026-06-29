@@ -1,0 +1,297 @@
+/* Core Structural Reset & Variable Tokenization */
+:root {
+    --primary-pink: #FFD3E0;
+    --deep-pink: #FAAFB8;
+    --soft-white: #FFF9FA;
+    --pure-white: #FFFFFF;
+    --text-dark: #2C2527;
+    --text-muted: #6E5F62;
+    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--pure-white);
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+}
+
+/* Luxury Gradient Application (Pink-White Interface) */
+body {
+    background: linear-gradient(180deg, var(--pure-white) 0%, var(--soft-white) 50%, var(--primary-pink) 100%);
+    background-attachment: fixed;
+}
+
+/* Navigation Layer */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 211, 224, 0.3);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    margin-left: 2.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: var(--transition-smooth);
+}
+
+.nav-links a:hover {
+    color: var(--deep-pink);
+}
+
+/* Hero Section Framework */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+    background: linear-gradient(135deg, var(--pure-white) 30%, var(--primary-pink) 100%);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+.sub-hero {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    color: var(--pure-white);
+    background-color: var(--text-dark);
+    border-radius: 0;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--text-dark);
+}
+
+.cta-button:hover {
+    background-color: transparent;
+    color: var(--text-dark);
+}
+
+/* Structural Components (Services & Team Layouts) */
+.services-section, .team-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 2rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    letter-spacing: 0.05em;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 1px;
+    background-color: var(--deep-pink);
+}
+
+/* Services Modules & Interaction Dynamics */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 211, 224, 0.4);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(250, 175, 184, 0.15);
+    background: var(--pure-white);
+}
+
+.video-container {
+    width: 100%;
+    height: 240px;
+    position: relative;
+    background-color: #EFEFEF;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 37, 39, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: var(--transition-smooth);
+}
+
+.video-overlay span {
+    color: var(--pure-white);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    border: 1px solid var(--pure-white);
+    padding: 0.5rem 1rem;
+}
+
+.service-card:hover .video-overlay {
+    opacity: 0;
+}
+
+.service-info {
+    padding: 2rem;
+}
+
+.service-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.service-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Team Component Matrix */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.team-card {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 211, 224, 0.2);
+    transition: var(--transition-smooth);
+}
+
+.team-card:hover {
+    background: var(--pure-white);
+    border-color: var(--deep-pink);
+}
+
+.avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-pink), var(--pure-white));
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    border: 1px solid rgba(250, 175, 184, 0.5);
+}
+
+.team-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+}
+
+.role {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+/* Animation Primitive Architecture */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(255, 211, 224, 0.3);
+}
